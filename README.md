@@ -1,6 +1,7 @@
 # Lightweight Liferay Theme
 
-![Liferay Lightweight logo](https://gitlab.savoirfairelinux.com/liferay-devel/lightweight-liferay-theme/raw/master/Logo.svg)
+
+![Liferay Lightweight logo](https://gitlab.savoirfairelinux.com/liferay-devel/lightweight-liferay-theme/raw/master/Logo.png)
 
 ## Instalation
 
