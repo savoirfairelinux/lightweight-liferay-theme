@@ -1,1 +1,5 @@
 node_modules
+target
+src/main/webapp/css
+src/main/webapp/images
+src/main/webapp/js

@@ -2,7 +2,8 @@
 
 var CONFIG = {
     url: 'lightweight.vm',
-    warFolder: './target/',
+    outputFolder: './src/main/webapp/',
+    distFolder: './target/',
     installedFolder: '/mnt/deploy-themes/',
     localDeployPath: '../vagrant/deploy-themes/', // If your liferay server is on your machine (not on a VM), should be same as CONFIG.installedFolder
     themeName: 'lightweight-theme'
@@ -15,13 +16,12 @@ var SRC = {
     scss : './src/main/scss',
     js : './src/main/js',
     images : './src/main/images',
-    templates: './src/main/webapp/WEB-INF/templates',
-    fonts: './src/main/webapp/fonts'
+    templates: './src/main/webapp/WEB-INF/templates'
 };
 var OUTPUT = {
-    css : './src/main/webapp/css',
-    js : './src/main/webapp/js',
-    images : './src/main/webapp/images',
+    css : `${CONFIG.outputFolder}css`,
+    js : `${CONFIG.outputFolder}js`,
+    images : `${CONFIG.outputFolder}images`,
 };
 
 
@@ -42,6 +42,7 @@ var GogoShell = require('gogo-shell');
 var fs = require('fs');
 var rimraf = require('rimraf-promise');
 var unzipper = require('unzipper');
+var zip = require('gulp-zip');
 var watch = require('gulp-watch');
 var runSequence = require('run-sequence'); // TODO useless on gulp 4
 
@@ -94,6 +95,13 @@ gulp.task('copyImages', () => {
 
 gulp.task('build:images', ['copyImages']);
 
+
+gulp.task('build:war', () => {
+    return gulp.src(`${CONFIG.outputFolder}**/*`)
+        .pipe(zip(`${CONFIG.themeName}.war`))
+        .pipe(gulp.dest(CONFIG.distFolder));
+});
+
 /**
  * Build - Execute all build tasks
  */
@@ -102,6 +110,7 @@ gulp.task('build', cb => {
         'build:styles',
         'build:js',
         'build:images',
+        'build:war',
          cb
     );
 });
@@ -116,7 +125,7 @@ gulp.task('deployLocal', cb => {
 });
 
 gulp.task('deployLocal:copyThemeWar', () => {
-    return gulp.src(`${CONFIG.warFolder}${CONFIG.themeName}.war`)
+    return gulp.src(`${CONFIG.distFolder}${CONFIG.themeName}.war`)
         .pipe(gulp.dest(CONFIG.localDeployPath));
 });
 
@@ -193,7 +202,7 @@ gulp.task('sync', () => {
 gulp.task('default', () => {
     console.log(`
 ====> Gulp tasks:
-====>   Use "gulp build" to build projet
+====>   Use "gulp build" to build projet, and generate a war file
 ====>   Use "gulp deployLocal" to deploy builded war and init the sync for watch
 ====>   Use "gulp watch" to watch files, build them, and sync it
 ====>   Use "gulp sync" to copy your files allready builded

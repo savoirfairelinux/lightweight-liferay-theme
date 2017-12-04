@@ -1,39 +1,39 @@
 # Lightweight Liferay Theme
 
-
 ![Liferay Lightweight logo](https://gitlab.savoirfairelinux.com/liferay-devel/lightweight-liferay-theme/raw/master/Logo.png)
 
 ## Instalation
 
 ### Configure
 
-This repo architecture is for a maven project, but you can easily change that.
+The actual repo architecture is for a maven project, but you can easily change that.
 
-Important conf, on the gulpfile you will see this object:
+An important conf, on the gulpfile:
 
 ```js
 var CONFIG = {
     url: 'lightweight.vm',
-    warFolder: './target/',
+    outputFolder: './src/main/webapp/',
+    distFolder: './target/',
     installedFolder: '/mnt/deploy-themes/',
     localDeployPath: '../vagrant/deploy-themes/', // If your liferay server is on your machine (not on a VM), should be same as CONFIG.installedFolder
     themeName: 'lightweight-theme'
-};
 ```
 
-This config can work with a liferay instance on your localhost, or on a virtual machine
+This config exemple is for a liferay instance on a virtual machine, but you can edit this to use your localhost liferay server.
 
-* **Url**: The url of your liferay instance
-* **warFolder**: The path where found the war file (compiled by maven, ant, etc...)
-* **installedFolder**: A path for liferay
-* **localDeployPath**:  A path for you local machine (can be same as the path for liferay if your are not with a virtualised env)
+* **Url**: The url of your liferay instance (localhost, app.dev, etc...)
+* **outputFolder**: The folder of the "pré-compiled" theme, that will be transform to a .war file
+* **distFolder**: The path where the the war file is created
+* **installedFolder**: A path to let liferay (Osgi) find the theme.
+* **localDeployPath**:  A path for you local machine (can be same as **installedFolder** if your using on a localhost liferay)
 * **themeName**: Your theme name
 
 ### Requierments:
 
 * NodeJs, version **6.9.1** (v6 minimum).
 * **Tips:** use **nvm** (node verison manager)
-* yarn **>0.16.1** (`npm install -g yarn`)
+* yarn **>=0.17.10** (`npm install -g yarn`)
 
 ### Install:
 
