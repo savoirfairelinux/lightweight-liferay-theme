@@ -242,7 +242,7 @@
 
 <#if pageSubtitle??>
  <#-- Is asset publisher details view -->
- <#-- <#assign the_title = pageSubtitle + " - " + the_title /> -->
+ <#assign the_title = pageSubtitle + " - " + the_title />
 </#if>
 
 <#if tilesTitle?has_content>
